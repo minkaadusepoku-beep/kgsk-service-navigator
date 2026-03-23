@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service-Navigator — Küsters Grün.Stadt.Klima</title>
+<meta name="description" content="KGSK Service-Navigator: Von der Systemauswahl über den Fördercheck bis zur Klimasimulation — der geführte Einstieg in Ihre Begrünungsmaßnahme.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── KGSK Design Tokens ─────────────────────────────────── */
+:root {
+  --dark:       #0F1923;
+  --lime:       #A6D100;
+  --lime-dark:  #7A9E00;
+  --lime-hover: #6A8A00;
+  --lime-pale:  #F4FADC;
+  --blue:       #1E5FA8;
+  --blue-pale:  #E4EEF9;
+  --text:       #1E2B36;
+  --muted:      #5A6672;
+  --bg:         #F2F4F5;
+  --white:      #FFFFFF;
+  --border:     #DCE2E6;
+  --shadow-sm:  0 1px 4px rgba(0,0,0,0.07);
+  --shadow:     0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.14);
+  --r:          10px;
+  --r-sm:       6px;
+  --r-lg:       16px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { color: var(--dark); }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* ── Header ─────────────────────────────────────────────── */
+.site-header {
+  background: var(--dark);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 72px;
+  padding: 0 40px;
+  border-bottom: 2px solid var(--lime);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo-box {
+  display: flex;
+  flex-direction: column;
+  background: var(--lime);
+  padding: 5px 10px;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+.logo-box:hover { background: var(--lime-dark); }
+
+.logo-name { font-size: 13px; font-weight: 800; color: var(--dark); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2; }
+.logo-sub  { font-size: 9px; font-weight: 600; color: var(--dark); letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; line-height: 1.2; }
+
+.header-tagline {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.02em;
+  padding-left: 20px;
+  border-left: 1px solid rgba(255,255,255,0.12);
+  white-space: nowrap;
+}
+
+.header-spacer { flex: 1; }
+
+.lang-toggle { display: flex; align-items: center; gap: 4px; }
+.lang-btn {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border: 1px solid transparent;
+  color: rgba(255,255,255,0.4);
+  background: transparent;
+  transition: color 0.15s, background 0.15s;
+  line-height: 1;
+}
+.lang-btn:hover { color: rgba(255,255,255,0.8); }
+.lang-btn.active { background: var(--lime); color: var(--dark); border-color: var(--lime); }
+
+/* ── Hero ────────────────────────────────────────────────── */
+.pn-hero {
+  background: var(--dark);
+  padding: 72px 40px 80px;
+  text-align: center;
+  position: relative;
+}
+.pn-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(166,209,0,0.4), transparent);
+}
+
+.pn-eyebrow {
+  display: inline-block;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--lime);
+  margin-bottom: 16px;
+}
+
+.pn-title {
+  font-size: 46px; font-weight: 800; line-height: 1.15;
+  color: var(--white); margin-bottom: 20px;
+  letter-spacing: -0.025em;
+  max-width: 680px; margin-left: auto; margin-right: auto;
+}
+
+.pn-sub {
+  font-size: 18px;
+  color: rgba(255,255,255,0.58);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ── Main grid ───────────────────────────────────────────── */
+.pn-main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 52px 24px 80px;
+  flex: 1;
+}
+
+.pn-section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pn-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.pn-live-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+.pn-enquiry-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 48px;
+}
+
+/* ── Path card ───────────────────────────────────────────── */
+.path-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.15s ease;
+  text-align: left;
+  position: relative;
+}
+.path-card:hover {
+  border-color: var(--lime-dark);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+.path-card.card-live { border-color: rgba(122,158,0,0.35); }
+.path-card.card-live:hover { border-color: var(--lime-dark); }
+
+.card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 9px; border-radius: 50px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+.status-live     { background: rgba(122,158,0,0.14); color: var(--lime-dark); }
+.status-enquiry  { background: var(--blue-pale);     color: var(--blue); }
+
+.card-icon { font-size: 28px; line-height: 1; margin-bottom: 12px; }
+
+.card-title {
+  font-size: 16px; font-weight: 800; color: var(--dark);
+  line-height: 1.25; margin-bottom: 10px; letter-spacing: -0.01em;
+}
+
+.card-desc {
+  font-size: 13px; color: var(--muted);
+  line-height: 1.6; flex: 1; margin-bottom: 22px;
+}
+
+.card-feature-list {
+  list-style: none;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.card-feature-list li {
+  font-size: 12px; color: var(--text);
+  display: flex; align-items: flex-start; gap: 7px;
+  line-height: 1.45;
+}
+.card-feature-list li::before {
+  content: '✓';
+  font-size: 11px; font-weight: 700;
+  color: var(--lime-dark);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px; font-weight: 700;
+  padding: 9px 16px;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  width: fit-content;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+.cta-primary {
+  background: var(--lime-dark);
+  color: var(--white);
+}
+.cta-primary:hover {
+  background: var(--lime-hover);
+  box-shadow: 0 2px 8px rgba(106,138,0,0.35);
+  color: var(--white);
+  text-decoration: none;
+}
+.cta-secondary {
+  background: var(--blue-pale);
+  color: var(--blue);
+}
+.cta-secondary:hover {
+  background: var(--blue);
+  color: var(--white);
+  text-decoration: none;
+}
+
+/* ── Trust bar ───────────────────────────────────────────── */
+.trust-bar {
+  background: var(--dark);
+  border-radius: var(--r-lg);
+  padding: 28px 40px;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  justify-content: space-around;
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 0 24px;
+}
+.trust-item:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.trust-icon { font-size: 22px; margin-bottom: 2px; }
+.trust-label { font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 500; line-height: 1.4; max-width: 120px; }
+.trust-highlight { font-size: 11px; font-weight: 700; color: var(--lime); letter-spacing: 0.04em; }
+
+/* ── Modal overlay ───────────────────────────────────────── */
+.modal-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  background: rgba(15,25,35,0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-card {
+  background: var(--white);
+  border-radius: var(--r-lg);
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+.modal-overlay.open .modal-card { transform: none; }
+
+.modal-header {
+  padding: 22px 26px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  z-index: 1;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.modal-header-text { flex: 1; }
+
+.modal-service-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px; font-weight: 700; color: var(--blue);
+  background: var(--blue-pale);
+  padding: 3px 10px; border-radius: 50px;
+  margin-bottom: 8px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+.modal-title {
+  font-size: 19px; font-weight: 800; color: var(--dark); line-height: 1.25;
+}
+
+.modal-close {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--muted);
+  cursor: pointer; flex-shrink: 0;
+  transition: background 0.15s;
+}
+.modal-close:hover { background: var(--border); color: var(--dark); }
+
+.modal-body { padding: 22px 26px 28px; }
+
+/* Enquiry form */
+.form-group { margin-bottom: 14px; }
+.form-label {
+  display: block;
+  font-size: 12px; font-weight: 600; color: var(--text);
+  margin-bottom: 6px; letter-spacing: 0.02em;
+}
+.form-label .req { color: #C0392B; margin-left: 2px; }
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  font-family: inherit; font-size: 14px; color: var(--text);
+  background: var(--white);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--lime-dark);
+  box-shadow: 0 0 0 3px rgba(122,158,0,0.14);
+}
+.form-textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.consent-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  margin-top: 4px;
+}
+.consent-check { display: flex; align-items: flex-start; gap: 10px; }
+.consent-check input[type="checkbox"] { margin-top: 3px; accent-color: var(--lime-dark); flex-shrink: 0; }
+.consent-check span { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+.validation-msg {
+  font-size: 12px; color: #C0392B;
+  margin-top: 10px;
+  display: none;
+}
+.validation-msg.visible { display: block; }
+
+.btn-submit {
+  width: 100%;
+  padding: 13px 24px;
+  background: var(--lime-dark); color: var(--white);
+  border: none; border-radius: var(--r-sm);
+  font-family: inherit; font-size: 15px; font-weight: 700;
+  cursor: pointer; margin-top: 16px;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.btn-submit:hover { background: var(--lime-hover); box-shadow: 0 2px 10px rgba(106,138,0,0.35); }
+.btn-submit:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; box-shadow: none; }
+
+/* Success / error states */
+.form-state-success,
+.form-state-error {
+  display: none;
+  text-align: center;
+  padding: 32px 16px;
+}
+.form-state-success.visible,
+.form-state-error.visible { display: block; }
+
+.state-icon { font-size: 44px; margin-bottom: 16px; }
+.state-title { font-size: 19px; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
+.state-body { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+.btn-close-modal {
+  padding: 10px 24px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  font-family: inherit; font-size: 14px; font-weight: 600; color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-close-modal:hover { background: var(--border); }
+
+.fallback-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.btn-fallback {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: var(--r-sm);
+  font-size: 13px; font-weight: 600; font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.btn-fallback:hover { background: var(--border); color: var(--dark); text-decoration: none; }
+
+/* ── Footer ──────────────────────────────────────────────── */
+.site-footer {
+  background: var(--dark);
+  padding: 24px 40px;
+  margin-top: auto;
+}
+.footer-inner {
+  max-width: 1080px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-brand { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.4); }
+.footer-links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.footer-links a { font-size: 12px; font-weight: 600; color: var(--lime); text-decoration: none; transition: color 0.15s; }
+.footer-links a:hover { color: var(--lime-dark); }
+.footer-disclaimer { width: 100%; font-size: 11px; color: rgba(255,255,255,0.22); line-height: 1.55; margin-top: 6px; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .pn-live-row    { grid-template-columns: 1fr; }
+  .pn-enquiry-row { grid-template-columns: 1fr 1fr; }
+  .trust-bar      { flex-wrap: wrap; justify-content: center; gap: 20px; padding: 22px 24px; }
+  .trust-item     { border-right: none !important; padding: 0 16px; }
+  .pn-title       { font-size: 34px; }
+}
+
+@media (max-width: 560px) {
+  .site-header   { padding: 0 20px; }
+  .header-tagline { display: none; }
+  .pn-hero       { padding: 48px 20px 60px; }
+  .pn-main       { padding: 32px 16px 60px; }
+  .pn-title      { font-size: 28px; }
+  .pn-sub        { font-size: 16px; }
+  .pn-enquiry-row { grid-template-columns: 1fr; }
+  .form-row      { grid-template-columns: 1fr; }
+  .footer-inner  { flex-direction: column; align-items: flex-start; }
+  .site-footer   { padding: 22px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ════════════════════════════════════════════ -->
+<header class="site-header" role="banner">
+  <a href="https://www.kgsk.de" class="logo-box" aria-label="KGSK Startseite">
+    <div class="logo-name">KGSK</div>
+    <div class="logo-sub">GRÜN.STADT.KLIMA</div>
+  </a>
+  <span class="header-tagline" id="hdr-tagline">Service-Navigator</span>
+  <div class="header-spacer"></div>
+  <div class="lang-toggle" role="group" aria-label="Sprache">
+    <button class="lang-btn active" id="lang-de" data-lang="de" onclick="setHubLang('de')" aria-label="Deutsch">DE</button>
+    <button class="lang-btn"        id="lang-en" data-lang="en" onclick="setHubLang('en')" aria-label="English">EN</button>
+  </div>
+</header>
+
+<!-- ══ HERO ══════════════════════════════════════════════ -->
+<section class="pn-hero" aria-labelledby="pn-hero-title">
+  <p class="pn-eyebrow" id="pn-eyebrow"></p>
+  <h1 class="pn-title" id="pn-hero-title"></h1>
+  <p class="pn-sub"    id="pn-hero-sub"></p>
+</section>
+
+<!-- ══ MAIN ══════════════════════════════════════════════ -->
+<main class="pn-main">
+  <p class="pn-section-label" id="label-live"></p>
+  <div class="pn-live-row" id="live-cards"></div>
+
+  <p class="pn-section-label" id="label-enquiry" style="margin-top:32px;"></p>
+  <div class="pn-enquiry-row" id="enquiry-cards"></div>
+
+  <div class="trust-bar" role="region" aria-label="Kompetenzen">
+    <div class="trust-item">
+      <div class="trust-icon" aria-hidden="true">🌿</div>
+      <div class="trust-highlight">Greenpass® zertifiziert</div>
+      <div class="trust-label" id="trust-1-label"></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon" aria-hidden="true">📄</div>
+      <div class="trust-highlight" id="trust-2-val">3</div>
+      <div class="trust-label" id="trust-2-label"></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon" aria-hidden="true">🇪🇺</div>
+      <div class="trust-highlight">EU Interreg DE-NL</div>
+      <div class="trust-label" id="trust-3-label"></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon" aria-hidden="true">🔬</div>
+      <div class="trust-highlight" id="trust-4-val">2</div>
+      <div class="trust-label" id="trust-4-label"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ══ ENQUIRY MODAL ═════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <div class="modal-service-tag" id="modal-service-tag"></div>
+        <h2 class="modal-title" id="modal-title"></h2>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Schließen">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Enquiry form -->
+      <form class="enquiry-form" id="enquiry-form" onsubmit="return false;" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="eq-name" id="lbl-name"></label>
+            <input type="text"  class="form-input" id="eq-name"  autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="eq-email" id="lbl-email"></label>
+            <input type="email" class="form-input" id="eq-email" autocomplete="email">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="eq-org" id="lbl-org"></label>
+            <input type="text"  class="form-input" id="eq-org" autocomplete="organization">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="eq-phone" id="lbl-phone"></label>
+            <input type="tel"   class="form-input" id="eq-phone" autocomplete="tel">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="eq-message" id="lbl-message"></label>
+          <textarea class="form-textarea" id="eq-message" rows="4"></textarea>
+        </div>
+        <div class="consent-block">
+          <label class="consent-check">
+            <input type="checkbox" id="eq-consent">
+            <span id="lbl-consent"></span>
+          </label>
+        </div>
+        <div class="validation-msg" id="eq-validation"></div>
+        <button type="button" class="btn-submit" id="eq-submit" onclick="submitEnquiry()"></button>
+      </form>
+
+      <!-- Success state -->
+      <div class="form-state-success" id="state-success">
+        <div class="state-icon">✅</div>
+        <h3 class="state-title" id="success-title"></h3>
+        <p class="state-body"   id="success-body"></p>
+        <button class="btn-close-modal" onclick="closeModal()" id="btn-success-close"></button>
+      </div>
+
+      <!-- Error / demo state -->
+      <div class="form-state-error" id="state-error">
+        <div class="state-icon" id="error-icon">⚠️</div>
+        <h3 class="state-title" id="error-title"></h3>
+        <p class="state-body"   id="error-body"></p>
+        <div class="fallback-actions" id="fallback-actions" style="display:none;">
+          <button class="btn-fallback btn-fallback-copy" id="btn-copy-enquiry" type="button" onclick="copyHubEnquiry()"></button>
+          <a class="btn-fallback btn-fallback-mailto" id="btn-mailto-enquiry" href="#" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <button class="btn-close-modal" onclick="closeModal()" id="btn-error-close"></button>
+      </div>
+
+    </div><!-- /modal-body -->
+  </div><!-- /modal-card -->
+</div><!-- /modal-overlay -->
+
+<!-- ══ FOOTER ════════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <span class="footer-brand">Küsters Grün.Stadt.Klima GmbH</span>
+    <nav class="footer-links" aria-label="Rechtliches">
+      <a href="https://www.kgsk.de/impressum"  target="_blank" rel="noopener noreferrer" id="ftr-imprint">Impressum</a>
+      <a href="https://www.kgsk.de/datenschutz" target="_blank" rel="noopener noreferrer" id="ftr-privacy">Datenschutz</a>
+      <a href="./kgsk-tools.html" id="ftr-tool-link">Planungstools</a>
+    </nav>
+    <p class="footer-disclaimer" id="ftr-disclaimer"></p>
+  </div>
+</footer>
+
+<script src="kgsk-analytics.js"></script>
+<script>
+/* ==========================================================================
+   KGSK Service-Navigator — hub.js (inline)
+   Self-contained. ES5-compatible.
+   ========================================================================== */
+
+/* ── Config ─────────────────────────────────────────────── */
+
+/* Set this to your form endpoint to enable live submission.
+   Leave empty for demo mode (console.log + simulated success). */
+var KGSK_ENQUIRY_ENDPOINT = 'https://formspree.io/f/xjganwzw';
+
+/* ── Language ────────────────────────────────────────────── */
+
+var hubLang = localStorage.getItem('kgsk_lang') || 'de';
+var _activeService = null;
+
+var S = {
+  de: {
+    hdr_tagline:     'Service-Navigator',
+    eyebrow:         'Projektberatung & Planungstools',
+    hero_title:      'Erzählen Sie uns von Ihrem Projekt',
+    hero_sub:        'Wählen Sie den Bereich, der Ihrem Vorhaben am nächsten kommt — wir begleiten Sie von der ersten Einschätzung bis zur Umsetzung.',
+    label_live:      'Direkt starten — Tool verfügbar',
+    label_enquiry:   'Anfrage — wir melden uns innerhalb von 2 Werktagen',
+    trust_1:         'Urban Climate Architect',
+    trust_2:         'Peer-reviewed Publikationen',
+    trust_3:         'Work Package Leader',
+    trust_4:         'Peer-Reviewer-Mandate',
+    modal_form_title:'Projektanfrage senden',
+    lbl_name:        'Name *',
+    lbl_email:       'E-Mail *',
+    lbl_org:         'Organisation',
+    lbl_phone:       'Telefon',
+    lbl_message:     'Kurzbeschreibung Ihres Projekts',
+    lbl_consent:     'Ich stimme zu, dass KGSK meine Angaben zur Bearbeitung meiner Anfrage verwendet. Eine Weitergabe an Dritte erfolgt nicht.',
+    btn_submit:      'Anfrage absenden',
+    val_error:       'Bitte füllen Sie Name und E-Mail aus und stimmen Sie der Datenschutzerklärung zu.',
+    success_title:   'Vielen Dank für Ihre Anfrage!',
+    success_body:    'Wir melden uns innerhalb von 2 Werktagen bei Ihnen. Bei dringenden Rückfragen erreichen Sie uns direkt unter office@kgsk.de',
+    success_close:   'Schließen',
+    error_title:     'Technischer Fehler',
+    error_body:      'Ihre Anfrage konnte nicht gesendet werden. Bitte schreiben Sie uns direkt an office@kgsk.de — wir antworten schnell.',
+    error_close:     'Schließen',
+    demo_title:      'Demo-Modus',
+    demo_body:       'Kein Endpunkt konfiguriert. Bitte wenden Sie sich direkt an office@kgsk.de oder kopieren Sie Ihre Anfrage.',
+    lbl_copy:        'Anfrage kopieren',
+    lbl_mailto:      'E-Mail öffnen',
+    ftr_imprint:     'Impressum',
+    ftr_privacy:     'Datenschutz',
+    ftr_tool:        'Planungstools',
+    ftr_disclaimer:  'Dieses Tool dient der indikativen Ersteinschätzung und ersetzt keine fachkundige Projektberatung. Küsters Grün.Stadt.Klima GmbH — Hürth, Deutschland.'
+  },
+  en: {
+    hdr_tagline:     'Service Navigator',
+    eyebrow:         'Project Consulting & Planning Tools',
+    hero_title:      'Tell us about your project',
+    hero_sub:        'Select the service area closest to your project — we guide you from first assessment through to implementation.',
+    label_live:      'Start now — tool available',
+    label_enquiry:   'Enquiry — we respond within 2 business days',
+    trust_1:         'Urban Climate Architect',
+    trust_2:         'Peer-reviewed publications',
+    trust_3:         'Work Package Leader',
+    trust_4:         'Peer reviewer mandates',
+    modal_form_title:'Send project enquiry',
+    lbl_name:        'Name *',
+    lbl_email:       'Email *',
+    lbl_org:         'Organisation',
+    lbl_phone:       'Phone',
+    lbl_message:     'Brief description of your project',
+    lbl_consent:     'I agree that KGSK may use my details to process my enquiry. No data will be passed to third parties.',
+    btn_submit:      'Send enquiry',
+    val_error:       'Please enter your name and email, and accept the privacy policy.',
+    success_title:   'Thank you for your enquiry!',
+    success_body:    'We will get back to you within 2 business days. For urgent matters, contact us directly at office@kgsk.de',
+    success_close:   'Close',
+    error_title:     'Technical error',
+    error_body:      'Your enquiry could not be sent. Please write to us directly at office@kgsk.de — we respond promptly.',
+    error_close:     'Close',
+    demo_title:      'Demo mode',
+    demo_body:       'No endpoint configured. Please contact office@kgsk.de directly or copy your enquiry.',
+    lbl_copy:        'Copy enquiry',
+    lbl_mailto:      'Open email',
+    ftr_imprint:     'Legal notice',
+    ftr_privacy:     'Privacy policy',
+    ftr_tool:        'Planning tools',
+    ftr_disclaimer:  'This tool provides an indicative first assessment and does not replace professional project consulting. Küsters Grün.Stadt.Klima GmbH — Hürth, Germany.'
+  }
+};
+
+function hs(key) {
+  var d = S[hubLang];
+  return (d && d[key]) ? d[key] : (S['de'][key] || key);
+}
+
+/* ── Service definitions ─────────────────────────────────── */
+
+var SERVICES = [
+  {
+    id:       'plan',
+    live:     true,
+    url:      'kgsk-tools.html?tab=roi',
+    icon:     '🌿',
+    title_de: 'Dach- und Fassadenbegrünung planen',
+    title_en: 'Plan roof or facade greening',
+    desc_de:  'Systemauswahl und technische Ersteinschätzung für Extensiv-, Intensiv- und Fassadenbegrünung.',
+    desc_en:  'System selection and technical first assessment for green roofs and facades.',
+    features_de: ['Substrat, Vegetation, Aufbautiefe', 'Technische Eignung nach Gebäudetyp'],
+    features_en: ['Substrate, vegetation, build-up depth', 'Technical suitability by building type'],
+    cta_de:   'Zum Planungstool',
+    cta_en:   'Open planning tool'
+  },
+  {
+    id:       'foerdercheck',
+    live:     true,
+    url:      'kgsk-tools.html',
+    icon:     '🔍',
+    title_de: 'Förderfähigkeit und Wirtschaftlichkeit prüfen',
+    title_en: 'Check funding eligibility and economics',
+    desc_de:  'Indikative Ersteinschätzung: passende Förderprogramme, indikativer ROI-Rechner und Nutzenbewertung (Energie, Regenwasser, Biodiversität) über 25 Jahre.',
+    desc_en:  'Indicative first assessment: matching funding programmes, indicative ROI calculator and benefit analysis (energy, stormwater, biodiversity) over 25 years.',
+    features_de: ['13 Förderprogramme geprüft', 'ROI und Amortisationsdauer', 'Offizielle Quellenangaben'],
+    features_en: ['13 funding programmes checked', 'ROI and payback period', 'Official source references'],
+    cta_de:   'Zum Fördercheck',
+    cta_en:   'Open funding check'
+  },
+  {
+    id:       'greenpass',
+    live:     false,
+    icon:     '🌡️',
+    title_de: 'Klimawirkung simulieren (Greenpass®)',
+    title_en: 'Simulate climate impact (Greenpass®)',
+    desc_de:  'Wissenschaftliche Simulation der thermischen und hydraulischen Wirkung Ihrer Maßnahme auf Quartiersebene. Greenpass® zertifiziertes Verfahren.',
+    desc_en:  'Scientific simulation of thermal and hydraulic effects of your measure at district level. Greenpass® certified methodology.',
+    cta_de:   'Anfrage senden',
+    cta_en:   'Send enquiry',
+    enquiry_context_de: 'Klimawirkungs-Simulation (Greenpass®)',
+    enquiry_context_en: 'Climate impact simulation (Greenpass®)'
+  },
+  {
+    id:       'research',
+    live:     false,
+    icon:     '🔬',
+    title_de: 'Forschung, Pilotprojekt oder Produktentwicklung',
+    title_en: 'Research, pilot project or product development',
+    desc_de:  'Wissenschaftliche Begleitung, Messkampagnen, Systemvalidierung und angewandte Forschung zu Gebäudebegrünung für Hersteller und Institutionen.',
+    desc_en:  'Scientific support, measurement campaigns, system validation and applied research on building greening for manufacturers and institutions.',
+    cta_de:   'Anfrage senden',
+    cta_en:   'Send enquiry',
+    enquiry_context_de: 'Forschung / Pilotprojekt / Produktentwicklung',
+    enquiry_context_en: 'Research / pilot project / product development'
+  },
+  {
+    id:       'training',
+    live:     false,
+    icon:     '📚',
+    title_de: 'Vortrag, Schulung oder Fachberatung',
+    title_en: 'Talk, training or technical consulting',
+    desc_de:  'Expertenbeiträge, praxisnahe Workshops und Fachberatung zu Gebäudebegrünung, Klimaanpassung und urbanem Grün für Kommunen, Planer und Institutionen.',
+    desc_en:  'Expert talks, hands-on workshops and technical consulting on building greening, climate adaptation and urban green infrastructure.',
+    cta_de:   'Anfrage senden',
+    cta_en:   'Send enquiry',
+    enquiry_context_de: 'Vortrag / Schulung / Fachberatung',
+    enquiry_context_en: 'Talk / training / technical consulting'
+  }
+];
+
+/* ── Card rendering ──────────────────────────────────────── */
+
+function buildCard(svc) {
+  var title    = hubLang === 'de' ? svc.title_de : svc.title_en;
+  var desc     = hubLang === 'de' ? svc.desc_de  : svc.desc_en;
+  var cta      = hubLang === 'de' ? svc.cta_de   : svc.cta_en;
+  var features = svc.live ? (hubLang === 'de' ? svc.features_de : svc.features_en) : null;
+
+  var statusClass = svc.live ? 'status-live' : 'status-enquiry';
+  var statusText  = svc.live
+    ? (hubLang === 'de' ? '● Verfügbar' : '● Available')
+    : (hubLang === 'de' ? '◌ Anfrage'   : '◌ Enquiry');
+
+  var ctaEl = '';
+  if (svc.live) {
+    ctaEl = '<a href="' + svc.url + '" class="card-cta cta-primary"' +
+      ' onclick="trackCardClick(\'' + svc.id + '\',\'' + svc.url + '\')">' +
+      cta + ' →</a>';
+  } else {
+    ctaEl = '<button class="card-cta cta-secondary" onclick="openEnquiry(\'' + svc.id + '\')">' +
+      cta + ' →</button>';
+  }
+
+  var featureHtml = '';
+  if (features && features.length) {
+    featureHtml = '<ul class="card-feature-list">';
+    for (var i = 0; i < features.length; i++) {
+      featureHtml += '<li>' + features[i] + '</li>';
+    }
+    featureHtml += '</ul>';
+  }
+
+  return '<div class="path-card' + (svc.live ? ' card-live' : '') + '">' +
+    '<span class="card-status ' + statusClass + '">' + statusText + '</span>' +
+    '<div class="card-icon" aria-hidden="true">' + svc.icon + '</div>' +
+    '<h3 class="card-title">' + title + '</h3>' +
+    '<p class="card-desc">' + desc + '</p>' +
+    featureHtml +
+    ctaEl +
+    '</div>';
+}
+
+function renderCards() {
+  var liveEl    = document.getElementById('live-cards');
+  var enquiryEl = document.getElementById('enquiry-cards');
+  if (!liveEl || !enquiryEl) return;
+
+  var liveHtml = '';
+  var enquiryHtml = '';
+
+  for (var i = 0; i < SERVICES.length; i++) {
+    if (SERVICES[i].live) {
+      liveHtml += buildCard(SERVICES[i]);
+    } else {
+      enquiryHtml += buildCard(SERVICES[i]);
+    }
+  }
+
+  liveEl.innerHTML    = liveHtml;
+  enquiryEl.innerHTML = enquiryHtml;
+}
+
+/* ── Static string rendering ─────────────────────────────── */
+
+function renderStrings() {
+  var ids = {
+    'pn-eyebrow':    'eyebrow',
+    'pn-hero-title': 'hero_title',
+    'pn-hero-sub':   'hero_sub',
+    'label-live':    'label_live',
+    'label-enquiry': 'label_enquiry',
+    'trust-1-label': 'trust_1',
+    'trust-2-label': 'trust_2',
+    'trust-3-label': 'trust_3',
+    'trust-4-label': 'trust_4',
+    'ftr-imprint':   'ftr_imprint',
+    'ftr-privacy':   'ftr_privacy',
+    'ftr-tool-link': 'ftr_tool',
+    'ftr-disclaimer':'ftr_disclaimer'
+  };
+  for (var id in ids) {
+    if (!Object.prototype.hasOwnProperty.call(ids, id)) continue;
+    var el = document.getElementById(id);
+    if (el) el.textContent = hs(ids[id]);
+  }
+}
+
+function updateLangButtons() {
+  var btns = document.querySelectorAll('.lang-btn');
+  for (var i = 0; i < btns.length; i++) {
+    var isActive = btns[i].getAttribute('data-lang') === hubLang;
+    btns[i].className = 'lang-btn' + (isActive ? ' active' : '');
+  }
+}
+
+/* ── Language switch ─────────────────────────────────────── */
+
+function setHubLang(lang) {
+  var prev = hubLang;
+  hubLang = lang;
+  localStorage.setItem('kgsk_lang', lang);
+  document.documentElement.lang = lang;
+  if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.langSwitch(prev, lang); }
+  updateLangButtons();
+  renderStrings();
+  renderCards();
+  renderModalStrings();
+}
+
+/* ── Modal ───────────────────────────────────────────────── */
+
+function openEnquiry(serviceId) {
+  _activeService = null;
+  for (var i = 0; i < SERVICES.length; i++) {
+    if (SERVICES[i].id === serviceId) { _activeService = SERVICES[i]; break; }
+  }
+  if (!_activeService) return;
+
+  resetModal();
+  renderModalStrings();
+
+  var serviceTag = hubLang === 'de'
+    ? (_activeService.enquiry_context_de || _activeService.title_de)
+    : (_activeService.enquiry_context_en || _activeService.title_en);
+  var tagEl = document.getElementById('modal-service-tag');
+  if (tagEl) tagEl.textContent = _activeService.icon + '  ' + serviceTag;
+
+  window.parent.postMessage({ type: 'kgsk_get_viewport' }, '*');
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.ctaClick('enquiry_open', serviceId); }
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function resetModal() {
+  var form = document.getElementById('enquiry-form');
+  if (form) { form.style.display = ''; form.reset(); }
+  var valMsg = document.getElementById('eq-validation');
+  if (valMsg) { valMsg.className = 'validation-msg'; valMsg.textContent = ''; }
+  var s = document.getElementById('state-success');
+  var e = document.getElementById('state-error');
+  if (s) s.className = 'form-state-success';
+  if (e) e.className = 'form-state-error';
+}
+
+function renderModalStrings() {
+  var fields = {
+    'modal-title':    'modal_form_title',
+    'lbl-name':       'lbl_name',
+    'lbl-email':      'lbl_email',
+    'lbl-org':        'lbl_org',
+    'lbl-phone':      'lbl_phone',
+    'lbl-message':    'lbl_message',
+    'lbl-consent':    'lbl_consent',
+    'eq-submit':      'btn_submit',
+    'success-title':  'success_title',
+    'success-body':   'success_body',
+    'btn-success-close':'success_close',
+    'error-title':    'error_title',
+    'error-body':     'error_body',
+    'btn-error-close':'error_close'
+  };
+  for (var id in fields) {
+    if (!Object.prototype.hasOwnProperty.call(fields, id)) continue;
+    var el = document.getElementById(id);
+    if (el) el.textContent = hs(fields[id]);
+  }
+}
+
+/* ── Form submission ─────────────────────────────────────── */
+
+var _lastEnquiryPayload = null;
+
+function submitEnquiry() {
+  var name    = (document.getElementById('eq-name')    || {}).value || '';
+  var email   = (document.getElementById('eq-email')   || {}).value || '';
+  var org     = (document.getElementById('eq-org')     || {}).value || '';
+  var phone   = (document.getElementById('eq-phone')   || {}).value || '';
+  var message = (document.getElementById('eq-message') || {}).value || '';
+  var consent = (document.getElementById('eq-consent') || {}).checked || false;
+
+  var valMsg = document.getElementById('eq-validation');
+
+  if (!name.trim() || !email.trim() || !consent) {
+    if (valMsg) { valMsg.textContent = hs('val_error'); valMsg.className = 'validation-msg visible'; }
+    return;
+  }
+  if (valMsg) { valMsg.className = 'validation-msg'; }
+
+  var submitBtn = document.getElementById('eq-submit');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = hubLang === 'de' ? 'Senden\u2026' : 'Sending\u2026'; }
+
+  var serviceLabel = _activeService
+    ? (hubLang === 'de' ? (_activeService.enquiry_context_de || _activeService.title_de) : (_activeService.enquiry_context_en || _activeService.title_en))
+    : '';
+
+  var payload = {
+    source_type:   'hub_enquiry',
+    service:       _activeService ? _activeService.id : '',
+    service_label: serviceLabel,
+    name:          name.trim(),
+    email:         email.trim(),
+    organisation:  org.trim(),
+    phone:         phone.trim(),
+    message:       message.trim(),
+    lang:          hubLang,
+    consent:       consent,
+    ts:            new Date().toISOString(),
+    page_url:      window.location.href
+  };
+
+  _lastEnquiryPayload = payload;
+
+  if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.enquiryPrepared(_activeService ? _activeService.id : ''); }
+
+  if (KGSK_ENQUIRY_ENDPOINT) {
+    if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.directSendAttempt('hub_enquiry'); }
+    fetch(KGSK_ENQUIRY_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r) {
+      if (r.ok) {
+        if (window.KGSK_ANALYTICS) {
+          KGSK_ANALYTICS.leadSubmit('enquiry', 0, _activeService ? _activeService.id : '');
+          KGSK_ANALYTICS.directSendSuccess('hub_enquiry');
+        }
+        showFormState('success');
+      } else {
+        if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.directSendFailure('hub_enquiry', 'http_' + r.status); }
+        showFormState('error');
+      }
+    })
+    .catch(function() {
+      if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.directSendFailure('hub_enquiry', 'network_error'); }
+      showFormState('error');
+    });
+  } else {
+    /* No endpoint — honest demo state */
+    showFormState('demo');
+  }
+}
+
+function buildHubMailtoHref(payload) {
+  var isDE    = hubLang === 'de';
+  var subject = encodeURIComponent(
+    isDE ? ('KGSK Projektanfrage: ' + (payload.service_label || payload.service || ''))
+         : ('KGSK Project Enquiry: ' + (payload.service_label || payload.service || ''))
+  );
+  var lines = [
+    'Service: '      + (payload.service_label || payload.service || ''),
+    'Name: '         + payload.name,
+    'E-Mail: '       + payload.email,
+    'Organisation: ' + (payload.organisation || ''),
+    'Telefon: '      + (payload.phone || ''),
+    '',
+    isDE ? 'Nachricht:' : 'Message:',
+    payload.message || '',
+    '',
+    (isDE ? 'Zeitpunkt: ' : 'Timestamp: ') + payload.ts
+  ];
+  return 'mailto:office@kgsk.de?subject=' + subject + '&body=' + encodeURIComponent(lines.join('\n'));
+}
+
+function copyHubEnquiry() {
+  if (!_lastEnquiryPayload) return;
+  var isDE = hubLang === 'de';
+  var lines = [
+    'Service: '      + (_lastEnquiryPayload.service_label || _lastEnquiryPayload.service || ''),
+    'Name: '         + _lastEnquiryPayload.name,
+    'E-Mail: '       + _lastEnquiryPayload.email,
+    'Organisation: ' + (_lastEnquiryPayload.organisation || ''),
+    'Telefon: '      + (_lastEnquiryPayload.phone || ''),
+    '',
+    isDE ? 'Nachricht:' : 'Message:',
+    _lastEnquiryPayload.message || '',
+    '',
+    (isDE ? 'Zeitpunkt: ' : 'Timestamp: ') + _lastEnquiryPayload.ts
+  ].join('\n');
+
+  var btn = document.getElementById('btn-copy-enquiry');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(lines).then(function() {
+      if (btn) btn.textContent = isDE ? '\u2713 Kopiert' : '\u2713 Copied';
+      if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.summaryCopy('hub_enquiry'); }
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = lines;
+    ta.style.cssText = 'position:fixed;left:-9999px;top:0;';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (ex) {}
+    document.body.removeChild(ta);
+    if (btn) btn.textContent = isDE ? '\u2713 Kopiert' : '\u2713 Copied';
+    if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.summaryCopy('hub_enquiry'); }
+  }
+}
+
+function showFormState(state) {
+  var form    = document.getElementById('enquiry-form');
+  var stateOk = document.getElementById('state-success');
+  var stateEr = document.getElementById('state-error');
+  var fa      = document.getElementById('fallback-actions');
+
+  if (form) form.style.display = 'none';
+
+  if (state === 'success') {
+    if (stateOk) stateOk.className = 'form-state-success visible';
+    return;
+  }
+
+  /* error or demo — both show the error card */
+  if (stateEr) stateEr.className = 'form-state-error visible';
+
+  var iconEl  = document.getElementById('error-icon');
+  var titleEl = document.getElementById('error-title');
+  var bodyEl  = document.getElementById('error-body');
+
+  if (state === 'demo') {
+    if (iconEl)  iconEl.textContent  = 'i\uFE0F';
+    if (titleEl) titleEl.textContent = hs('demo_title');
+    if (bodyEl)  bodyEl.textContent  = hs('demo_body');
+  }
+
+  /* Wire up fallback buttons */
+  if (fa && _lastEnquiryPayload) {
+    fa.style.display = 'flex';
+    var copyBtn   = document.getElementById('btn-copy-enquiry');
+    var mailtoBtn = document.getElementById('btn-mailto-enquiry');
+    if (copyBtn)   copyBtn.textContent  = hs('lbl_copy');
+    if (mailtoBtn) {
+      mailtoBtn.textContent = hs('lbl_mailto');
+      mailtoBtn.href = buildHubMailtoHref(_lastEnquiryPayload);
+      mailtoBtn.onclick = function() {
+        if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.officialContactClick('hub_' + state); }
+      };
+    }
+  }
+}
+
+/* ── Analytics ───────────────────────────────────────────── */
+
+function trackCardClick(serviceId, url) {
+  if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.ctaClick('live_card_' + serviceId, url); }
+}
+
+/* ── Close on backdrop click ─────────────────────────────── */
+
+document.addEventListener('click', function(e) {
+  var overlay = document.getElementById('modal-overlay');
+  if (e.target === overlay) { closeModal(); }
+});
+
+/* ── ESC key ─────────────────────────────────────────────── */
+document.addEventListener('keydown', function(e) {
+  if ((e.key === 'Escape' || e.keyCode === 27) && document.getElementById('modal-overlay').classList.contains('open')) {
+    closeModal();
+  }
+});
+
+/* ── Init ────────────────────────────────────────────────── */
+
+document.addEventListener('DOMContentLoaded', function() {
+  updateLangButtons();
+  renderStrings();
+  renderCards();
+  renderModalStrings();
+  if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.toolStart(hubLang); }
+});
+</script>
+
+<!-- iframe height bridge — reports content height to parent via postMessage -->
+<script>
+(function() {
+  if (window.self === window.top) return;
+  var _lastH      = 0;
+  var _modalOpen  = false;
+  var MODAL_BOOST = 520; /* extra px to guarantee modal is fully visible */
+
+  function postHeight() {
+    var base = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    var h    = _modalOpen ? Math.max(base, base + MODAL_BOOST) : base;
+    if (h === _lastH) return;
+    _lastH = h;
+    window.parent.postMessage({ type: 'kgsk_resize', height: h }, '*');
+  }
+
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+  if (window.MutationObserver) {
+    new MutationObserver(postHeight).observe(document.body, { childList: true, subtree: true, attributes: true });
+  }
+  setInterval(postHeight, 800);
+
+  /* Position modal overlay at the user's current viewport position */
+  window.addEventListener('message', function(e) {
+    if (!e.data || e.data.type !== 'kgsk_viewport_offset') return;
+    var overlay = document.getElementById('modal-overlay');
+    if (!overlay) return;
+    overlay.style.top    = e.data.top + 'px';
+    overlay.style.height = e.data.height + 'px';
+  });
+
+  /* Wrap openModal / closeModal to toggle height boost */
+  var _origOpen  = window.openModal;
+  var _origClose = window.closeModal;
+  if (typeof _origOpen === 'function') {
+    window.openModal = function() {
+      _origOpen.apply(this, arguments);
+      _modalOpen = true;
+      postHeight();
+    };
+  }
+  if (typeof _origClose === 'function') {
+    window.closeModal = function() {
+      _modalOpen = false;
+      _origClose.apply(this, arguments);
+      postHeight();
+    };
+  }
+})();
+</script>
+
+</body>
+</html>

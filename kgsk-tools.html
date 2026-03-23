@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planungs-Tools — Küsters Grün.Stadt.Klima</title>
+<meta name="description" content="Indikative Ersteinschätzung zu Fördermitteln und Wirtschaftlichkeit für Dach- und Fassadenbegrünungen — Küsters Grün.Stadt.Klima">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════ -->
+<header class="site-header" role="banner">
+  <a href="./projekt-navigator.html" class="logo-box" style="text-decoration:none;" aria-label="Zurück zum Service-Navigator">
+    <div class="logo-name">KGSK</div>
+    <div class="logo-sub">GRÜN.STADT.KLIMA</div>
+  </a>
+  <a href="./projekt-navigator.html" class="header-back-link" aria-label="Zum Service-Navigator">
+    <span aria-hidden="true">←</span>
+    <span data-i18n="nav_back_hub">Service-Navigator</span>
+  </a>
+  <span class="header-tagline" data-i18n="site_tagline">Planungs- &amp; Fördercheck-Tools</span>
+  <div class="header-spacer"></div>
+  <div class="lang-toggle" role="group" aria-label="Language selection">
+    <button class="lang-btn active" id="lang-de" data-lang="de" onclick="KGSK_APP.setLang('de')" aria-label="Deutsch">DE</button>
+    <button class="lang-btn" id="lang-en" data-lang="en" onclick="KGSK_APP.setLang('en')" aria-label="English">EN</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-eyebrow" data-i18n="hero_eyebrow">Kostenfreies Planungstool</div>
+  <h1 id="hero-title" data-i18n="hero_title">Fördermittel &amp; Wirtschaftlichkeit Ihrer Begrünungsmaßnahme prüfen</h1>
+  <p data-i18n="hero_subtitle">Erhalten Sie in wenigen Minuten eine indikative Ersteinschätzung zu passenden Förderprogrammen und der Wirtschaftlichkeit Ihrer Dach- oder Fassadenbegrünung.</p>
+  <div class="hero-badge" data-i18n="hero_badge">Keine Anmeldung erforderlich · Indikative Ersteinschätzung · Kostenlos</div>
+
+  <!-- Tab bar sits at bottom of hero -->
+  <nav class="tab-bar" role="tablist" aria-label="Tools">
+    <button class="tab-btn active" id="tab-fordermittelcheck" data-tab="fordermittelcheck" role="tab" aria-selected="true" aria-controls="panel-fordermittelcheck" onclick="KGSK_APP.switchTab('fordermittelcheck')">
+      <span class="tab-icon" aria-hidden="true">🔍</span>
+      <span data-i18n="tab_fmc">Fördermittelcheck</span>
+    </button>
+    <button class="tab-btn" id="tab-roi" data-tab="roi" role="tab" aria-selected="false" aria-controls="panel-roi" onclick="KGSK_APP.switchTab('roi')">
+      <span class="tab-icon" aria-hidden="true">📊</span>
+      <span data-i18n="tab_roi">ROI-Rechner</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ══════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════ -->
+<main class="main-wrap">
+
+  <!-- ─────────────────────────────────────
+       TOOL: FÖRDERMITTELCHECK
+  ───────────────────────────────────────── -->
+  <div class="tool-panel active" id="panel-fordermittelcheck" data-panel="fordermittelcheck" role="tabpanel" aria-labelledby="tab-fordermittelcheck">
+    <div class="card">
+
+      <!-- Card header -->
+      <div class="card-header">
+        <div class="eyebrow-sm" data-i18n="fmc_eyebrow">Schritt-für-Schritt-Analyse</div>
+        <h2 data-i18n="fmc_title">Fördermittelcheck Gebäudebegrünung</h2>
+        <p data-i18n="fmc_subtitle">Ermitteln Sie passende Förderprogramme für Ihr Projekt in wenigen Schritten.</p>
+      </div>
+
+      <!-- Progress stepper -->
+      <div class="progress-wrap" id="fmc-progress" aria-label="Fortschritt">
+        <div class="progress-steps" id="progress-dots">
+          <div class="progress-line" id="fmc-progress-line" style="width:0%"></div>
+          <div class="step-dot active" id="dot-0">1</div>
+          <div class="step-dot" id="dot-1">2</div>
+          <div class="step-dot" id="dot-2">3</div>
+          <div class="step-dot" id="dot-3">4</div>
+          <div class="step-dot" id="dot-4">5</div>
+        </div>
+        <div class="progress-labels">
+          <span class="step-label active" id="lbl-0" data-i18n="step_label_1">Rolle</span>
+          <span class="step-label" id="lbl-1" data-i18n="step_label_2">Projekt</span>
+          <span class="step-label" id="lbl-2" data-i18n="step_label_3">Gebäude</span>
+          <span class="step-label" id="lbl-3" data-i18n="step_label_4">Details</span>
+          <span class="step-label" id="lbl-4" data-i18n="step_label_5">Kontakt</span>
+        </div>
+      </div>
+
+      <!-- ── STEP 0: Actor ── -->
+      <div class="fmc-step active" id="fmc-step-0" data-step="0" role="group" aria-labelledby="q-actor">
+        <h3 class="step-q" id="q-actor" data-i18n="q_actor">Welche Rolle nehmen Sie ein?</h3>
+        <p class="step-hint" data-i18n="q_actor_hint">Wählen Sie die Beschreibung, die am besten zu Ihrer Situation passt.</p>
+        <div class="option-grid">
+          <button class="option-card" data-key="actor" data-val="bauherr" onclick="KGSK_APP.selectOption('actor','bauherr')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🏗️</div>
+            <div class="opt-title" data-i18n="actor_bauherr">Bauherr / Investor</div>
+            <div class="opt-desc" data-i18n="actor_bauherr_desc">Privater oder gewerblicher Eigentümer, Wohnungsbaugesellschaft</div>
+          </button>
+          <button class="option-card" data-key="actor" data-val="architekt" onclick="KGSK_APP.selectOption('actor','architekt')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">📐</div>
+            <div class="opt-title" data-i18n="actor_architekt">Architekt / Planer</div>
+            <div class="opt-desc" data-i18n="actor_architekt_desc">Planungsbüro, Landschaftsarchitekt, Fachplaner</div>
+          </button>
+          <button class="option-card" data-key="actor" data-val="kommune" onclick="KGSK_APP.selectOption('actor','kommune')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🏛️</div>
+            <div class="opt-title" data-i18n="actor_kommune">Stadt / Gemeinde / Öffentliche Hand</div>
+            <div class="opt-desc" data-i18n="actor_kommune_desc">Kommunaler Auftraggeber, öffentliche Einrichtung</div>
+          </button>
+          <button class="option-card" data-key="actor" data-val="hersteller" onclick="KGSK_APP.selectOption('actor','hersteller')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🔬</div>
+            <div class="opt-title" data-i18n="actor_hersteller">Hersteller / Industrie / Forschung</div>
+            <div class="opt-desc" data-i18n="actor_hersteller_desc">Produktentwicklung, Forschungsprojekt, angewandte Wissenschaft</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── STEP 1: Project type ── -->
+      <div class="fmc-step" id="fmc-step-1" data-step="1" role="group" aria-labelledby="q-project">
+        <h3 class="step-q" id="q-project" data-i18n="q_project">Art der geplanten Begrünung?</h3>
+        <p class="step-hint" data-i18n="q_project_hint">Wählen Sie die Maßnahme, die Ihrem Vorhaben am nächsten kommt.</p>
+        <div class="option-grid">
+          <button class="option-card" data-key="project" data-val="dach" onclick="KGSK_APP.selectOption('project','dach')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🌿</div>
+            <div class="opt-title" data-i18n="proj_dach">Dachbegrünung</div>
+            <div class="opt-desc" data-i18n="proj_dach_desc">Extensiv- oder Intensivbegrünung auf Flach- oder Schrägdach</div>
+          </button>
+          <button class="option-card" data-key="project" data-val="fassade" onclick="KGSK_APP.selectOption('project','fassade')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🌱</div>
+            <div class="opt-title" data-i18n="proj_fassade">Fassadenbegrünung</div>
+            <div class="opt-desc" data-i18n="proj_fassade_desc">Kletterpflanzen oder bodengebundene Fassadensysteme</div>
+          </button>
+          <button class="option-card" data-key="project" data-val="kombiniert" onclick="KGSK_APP.selectOption('project','kombiniert')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🏢</div>
+            <div class="opt-title" data-i18n="proj_kombiniert">Dach + Fassade</div>
+            <div class="opt-desc" data-i18n="proj_kombiniert_desc">Kombinierte Maßnahme für maximale Wirkung</div>
+          </button>
+          <button class="option-card" data-key="project" data-val="regenwasser" onclick="KGSK_APP.selectOption('project','regenwasser')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">💧</div>
+            <div class="opt-title" data-i18n="proj_regenwasser">Regenwassermanagement</div>
+            <div class="opt-desc" data-i18n="proj_regenwasser_desc">Zisternen, Rigolen, Mulden, Versickerungsflächen</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: Building type ── -->
+      <div class="fmc-step" id="fmc-step-2" data-step="2" role="group" aria-labelledby="q-building">
+        <h3 class="step-q" id="q-building" data-i18n="q_building">Art des Gebäudes?</h3>
+        <p class="step-hint" data-i18n="q_building_hint">Der Gebäudetyp beeinflusst die Förderfähigkeit erheblich.</p>
+        <div class="option-grid">
+          <button class="option-card" data-key="building" data-val="neubau" onclick="KGSK_APP.selectOption('building','neubau')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🏗️</div>
+            <div class="opt-title" data-i18n="build_neubau">Neubau</div>
+            <div class="opt-desc" data-i18n="build_neubau_desc">Noch im Bau oder in Planung</div>
+          </button>
+          <button class="option-card" data-key="building" data-val="bestand" onclick="KGSK_APP.selectOption('building','bestand')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🏠</div>
+            <div class="opt-title" data-i18n="build_bestand">Bestandsgebäude</div>
+            <div class="opt-desc" data-i18n="build_bestand_desc">Sanierung oder Nachrüstung eines bestehenden Gebäudes</div>
+          </button>
+          <button class="option-card" data-key="building" data-val="oeffentlich" onclick="KGSK_APP.selectOption('building','oeffentlich')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🏛️</div>
+            <div class="opt-title" data-i18n="build_oeffentlich">Öffentliches Gebäude</div>
+            <div class="opt-desc" data-i18n="build_oeffentlich_desc">Schule, Verwaltung, Infrastruktur</div>
+          </button>
+          <button class="option-card" data-key="building" data-val="sozial" onclick="KGSK_APP.selectOption('building','sozial')" type="button" aria-pressed="false">
+            <div class="opt-icon" aria-hidden="true">🏥</div>
+            <div class="opt-title" data-i18n="build_sozial">Soziale Einrichtung</div>
+            <div class="opt-desc" data-i18n="build_sozial_desc">Kindergarten, Pflegeeinrichtung, Gemeinschaftseinrichtung</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── STEP 3: Details ── (populated by renderDetailsStep()) -->
+      <div class="fmc-step" id="fmc-step-3" data-step="3" role="group" aria-labelledby="q-details">
+        <!-- Populated dynamically by renderDetailsStep() in app.js -->
+      </div>
+
+      <!-- ── STEP 4: Lead capture ── (populated by renderLeadStep()) -->
+      <div class="fmc-step" id="fmc-step-4" data-step="4" role="group" aria-labelledby="q-lead">
+        <!-- Populated dynamically by renderLeadStep() in app.js -->
+      </div>
+
+      <!-- Step navigation -->
+      <div class="step-nav" id="fmc-nav" role="navigation" aria-label="Schrittnavigation">
+        <button class="btn-back" id="fmc-back" onclick="KGSK_APP.fmcBack()" disabled type="button">
+          <span data-i18n="btn_back">Zurück</span>
+        </button>
+        <button class="btn-next" id="fmc-next" onclick="KGSK_APP.fmcNext()" disabled type="button">
+          <span data-i18n="btn_next">Weiter</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+    </div><!-- /card -->
+
+    <!-- Results wrapper (hidden until lead submitted) -->
+    <div id="fmc-results-wrapper" style="display:none; margin-top: 32px;">
+      <div id="fmc-results"></div>
+    </div>
+
+  </div><!-- /panel-fordermittelcheck -->
+
+
+  <!-- ─────────────────────────────────────
+       TOOL: ROI-RECHNER
+  ───────────────────────────────────────── -->
+  <div class="tool-panel" id="panel-roi" data-panel="roi" role="tabpanel" aria-labelledby="tab-roi">
+
+    <div class="roi-intro">
+      <div class="eyebrow-sm" data-i18n="roi_eyebrow">Wirtschaftlichkeitsanalyse</div>
+      <h2 data-i18n="roi_title">ROI-Rechner Gebäudebegrünung</h2>
+      <p data-i18n="roi_subtitle">Berechnen Sie Investitionskosten, Förderpotenzial und wirtschaftliche Effekte über einen 25-Jahres-Zeitraum.</p>
+    </div>
+
+    <div class="roi-layout">
+
+      <!-- Inputs panel -->
+      <div class="roi-inputs" role="form" aria-label="Eingabeparameter">
+        <div class="panel-label" data-i18n="roi_inputs_label">Eingaben</div>
+
+        <!-- Area -->
+        <div class="roi-field">
+          <label for="roi-area">
+            <span data-i18n="roi_area_label">Begrünungsfläche</span>
+            <span class="val" id="roi-area-val">300 m²</span>
+          </label>
+          <input type="range" id="roi-area" min="50" max="5000" step="50" value="300" aria-valuemin="50" aria-valuemax="5000" aria-valuenow="300">
+          <div class="range-ends"><span>50 m²</span><span>5.000 m²</span></div>
+        </div>
+
+        <!-- Quality -->
+        <div class="roi-field">
+          <label for="roi-quality">
+            <span data-i18n="roi_quality_label">Ausstattungsqualität</span>
+            <span class="val" id="roi-quality-val">Standard</span>
+          </label>
+          <input type="range" id="roi-quality" min="1" max="3" step="1" value="2" aria-valuemin="1" aria-valuemax="3" aria-valuenow="2">
+          <div class="range-ends"><span data-i18n="roi_quality_min">Einfach</span><span data-i18n="roi_quality_max">Premium</span></div>
+        </div>
+
+        <!-- Type selector -->
+        <div class="type-group">
+          <div class="type-group-label" data-i18n="roi_type_label">Begrünungsart</div>
+          <div class="type-options" role="radiogroup" aria-label="Begrünungsart">
+            <button class="type-btn active" id="type-extensiv" onclick="KGSK_APP.setROIType('extensiv')" type="button" role="radio" aria-checked="true">
+              <span class="t-icon" aria-hidden="true">🌿</span>
+              <span>
+                <div class="t-name" data-i18n="type_extensiv">Extensivbegrünung</div>
+                <div class="t-sub" data-i18n="type_extensiv_sub">Sedum, Moos, Kräuter</div>
+              </span>
+              <span class="t-price">40–85 €/m²</span>
+            </button>
+            <button class="type-btn" id="type-intensiv" onclick="KGSK_APP.setROIType('intensiv')" type="button" role="radio" aria-checked="false">
+              <span class="t-icon" aria-hidden="true">🌳</span>
+              <span>
+                <div class="t-name" data-i18n="type_intensiv">Intensivbegrünung</div>
+                <div class="t-sub" data-i18n="type_intensiv_sub">Stauden, Sträucher, Bäume</div>
+              </span>
+              <span class="t-price">120–320 €/m²</span>
+            </button>
+            <button class="type-btn" id="type-fassade" onclick="KGSK_APP.setROIType('fassade')" type="button" role="radio" aria-checked="false">
+              <span class="t-icon" aria-hidden="true">🌱</span>
+              <span>
+                <div class="t-name" data-i18n="type_fassade">Fassadenbegrünung</div>
+                <div class="t-sub" data-i18n="type_fassade_sub">Kletterpflanzen, Systeme</div>
+              </span>
+              <span class="t-price">80–210 €/m²</span>
+            </button>
+            <button class="type-btn" id="type-regenwasser" onclick="KGSK_APP.setROIType('regenwasser')" type="button" role="radio" aria-checked="false">
+              <span class="t-icon" aria-hidden="true">💧</span>
+              <span>
+                <div class="t-name" data-i18n="type_regenwasser">Regenwassermanagement</div>
+                <div class="t-sub" data-i18n="type_regenwasser_sub">Zisterne, Rigole, Mulde <span class="water-tag">Wassergebühr</span></div>
+              </span>
+              <span class="t-price">50–140 €/m²</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bundesland -->
+        <div class="land-field roi-field">
+          <label class="field-label" for="roi-land" data-i18n="roi_land_label">Bundesland</label>
+          <select id="roi-land" class="fmc-select" onchange="KGSK_APP.setROILand(this.value)" aria-label="Bundesland auswählen">
+            <option value="nrw">Nordrhein-Westfalen</option>
+            <option value="bay">Bayern</option>
+            <option value="baw">Baden-Württemberg</option>
+            <option value="ber">Berlin</option>
+            <option value="bra">Brandenburg</option>
+            <option value="bre">Bremen</option>
+            <option value="ham">Hamburg</option>
+            <option value="hes">Hessen</option>
+            <option value="mvo">Mecklenburg-Vorpommern</option>
+            <option value="nie">Niedersachsen</option>
+            <option value="rhe">Rheinland-Pfalz</option>
+            <option value="saa">Saarland</option>
+            <option value="sac">Sachsen</option>
+            <option value="sat">Sachsen-Anhalt</option>
+            <option value="sch">Schleswig-Holstein</option>
+            <option value="thu">Thüringen</option>
+          </select>
+        </div>
+
+        <!-- Context -->
+        <div class="roi-field">
+          <label class="field-label" for="roi-context" data-i18n="roi_context_label">Standortkontext</label>
+          <select id="roi-context" class="fmc-select" onchange="KGSK_APP.setROIContext(this.value)">
+            <option value="elevated" data-i18n-opt="ctx_elevated">Erhöht / Dachebene</option>
+            <option value="street_level" data-i18n-opt="ctx_street">Straßenniveau / Erdgeschoss</option>
+            <option value="courtyard" data-i18n-opt="ctx_courtyard">Innenhof / rückwärtig</option>
+          </select>
+        </div>
+
+        <!-- Substrate depth (for biodiversity) -->
+        <div class="roi-field" id="roi-substrate-wrap">
+          <label class="field-label" data-i18n="roi_substrate_label">Substrattiefe</label>
+          <div class="size-btn-group" id="roi-substrate-btns">
+            <button class="size-btn active" data-val="shallow" onclick="KGSK_APP.setROISubstrate('shallow')" data-i18n="substrate_shallow">Flach (&lt;8 cm)</button>
+            <button class="size-btn" data-val="medium" onclick="KGSK_APP.setROISubstrate('medium')" data-i18n="substrate_medium">Mittel (8–25 cm)</button>
+            <button class="size-btn" data-val="deep" onclick="KGSK_APP.setROISubstrate('deep')" data-i18n="substrate_deep">Tief (&gt;25 cm)</button>
+          </div>
+        </div>
+
+        <!-- Vegetation diversity -->
+        <div class="roi-field">
+          <label class="field-label" data-i18n="roi_vegdiv_label">Artenvielfalt</label>
+          <div class="size-btn-group">
+            <button class="size-btn" data-val="mono" onclick="KGSK_APP.setROIVegDiv('mono')" data-i18n="vegdiv_mono">Monokultur</button>
+            <button class="size-btn active" data-val="mixed" onclick="KGSK_APP.setROIVegDiv('mixed')" data-i18n="vegdiv_mixed">Gemischt</button>
+            <button class="size-btn" data-val="diverse" onclick="KGSK_APP.setROIVegDiv('diverse')" data-i18n="vegdiv_diverse">Artenreich</button>
+          </div>
+        </div>
+
+        <!-- Building use -->
+        <div class="roi-field">
+          <label class="field-label" for="roi-building-use" data-i18n="roi_building_use_label">Nutzung</label>
+          <select id="roi-building-use" class="fmc-select" onchange="KGSK_APP.setROIBuildingUse(this.value)">
+            <option value="commercial" data-i18n="use_commercial">Gewerblich</option>
+            <option value="residential" data-i18n="use_residential">Wohngebäude</option>
+            <option value="public" data-i18n="use_public">Öffentlich</option>
+            <option value="industrial" data-i18n="use_industrial">Industrie</option>
+          </select>
+        </div>
+
+      </div><!-- /roi-inputs -->
+
+      <!-- Results panel -->
+      <div class="roi-results" aria-live="polite" aria-label="Berechnungsergebnisse">
+        <div class="panel-label" data-i18n="roi_results_label">Ergebnisse</div>
+
+        <!-- Primary metrics (investment/cost) -->
+        <div class="result-primary" role="region" aria-label="Hauptkennzahlen">
+          <div class="rp-block">
+            <div class="rp-label" data-i18n="roi_total_cost">Investitionskosten (gesamt)</div>
+            <div class="rp-value" id="roi-total-cost">—</div>
+            <div class="rp-note" data-i18n="roi_cost_note">inkl. Planung &amp; Material</div>
+          </div>
+          <div class="rp-block">
+            <div class="rp-label" data-i18n="roi_net_cost">Nettokosten nach Förderung</div>
+            <div class="rp-value green" id="roi-net-cost">—</div>
+            <div class="rp-note" data-i18n="roi_net_note">nach indikativer Förderquote</div>
+          </div>
+        </div>
+
+        <!-- Monetized benefits section -->
+        <div class="benefits-section" id="roi-benefits-section">
+
+          <!-- Section heading -->
+          <div class="benefits-section-heading">
+            <span data-i18n="benefits_heading">Nutzenübersicht (25-Jahres-Betrachtung)</span>
+          </div>
+
+          <!-- Cash benefits: energy + stormwater -->
+          <div class="benefit-category">
+            <div class="benefit-cat-label">
+              <span class="benefit-cat-icon">💶</span>
+              <span data-i18n="benefit_cat_cash">Laufende Einsparungen</span>
+              <span class="confidence-badge confidence-medium" data-i18n="conf_medium">Mittlere Konfidenz</span>
+            </div>
+            <div class="benefit-cards-row">
+              <div class="benefit-card" id="ben-energy">
+                <div class="bc-icon">⚡</div>
+                <div class="bc-label" data-i18n="roi_energy_saving">Energieeinsparung</div>
+                <div class="bc-value" id="ben-energy-val">—</div>
+                <div class="bc-range" id="ben-energy-range">—</div>
+                <div class="bc-period" data-i18n="over_25y">über 25 Jahre</div>
+              </div>
+              <div class="benefit-card" id="ben-stormwater">
+                <div class="bc-icon">🌧️</div>
+                <div class="bc-label" data-i18n="roi_rain_saving">Regenwasser-Einsparung</div>
+                <div class="bc-value" id="ben-storm-val">—</div>
+                <div class="bc-range" id="ben-storm-range">—</div>
+                <div class="bc-period" data-i18n="over_25y">über 25 Jahre</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deferred-cost benefit: roof lifespan -->
+          <div class="benefit-category" id="ben-roof-wrap">
+            <div class="benefit-cat-label">
+              <span class="benefit-cat-icon">🏗️</span>
+              <span data-i18n="benefit_cat_deferred">Verschobene Kosten</span>
+              <span class="confidence-badge confidence-high" data-i18n="conf_high">Hohe Konfidenz</span>
+            </div>
+            <div class="benefit-cards-row">
+              <div class="benefit-card benefit-card-wide" id="ben-roof">
+                <div class="bc-icon">🏛️</div>
+                <div class="bc-label" data-i18n="roof_lifespan_label">Dachlebensdauer-Verlängerung</div>
+                <div class="bc-value" id="ben-roof-val">—</div>
+                <div class="bc-range" id="ben-roof-range">—</div>
+                <div class="bc-period" data-i18n="ben_roof_note">Verschobene Dacherneuerung (1 Zyklus)</div>
+                <div class="bc-assumption" id="ben-roof-assumption">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Locked detail nudge -->
+          <div class="locked-nudge" id="roi-locked-nudge"></div>
+
+          <!-- Payback bar -->
+          <div class="payback-section">
+            <div class="payback-header">
+              <span class="pb-label" data-i18n="roi_payback">Amortisationsdauer</span>
+              <span class="pb-value" id="roi-payback-val">—</span>
+            </div>
+            <div class="pb-track" id="roi-payback-bar-wrap">
+              <div class="pb-fill good" id="roi-payback-bar" style="width:0%"></div>
+            </div>
+            <div class="pb-scale">
+              <span>0</span><span>5</span><span>10</span><span>15</span><span>20</span>
+              <span data-i18n="roi_payback_25">25 J.</span>
+            </div>
+          </div>
+
+          <!-- Co-benefits (scored) -->
+          <div class="benefit-category cobenefit-category">
+            <div class="benefit-cat-label">
+              <span class="benefit-cat-icon">🌿</span>
+              <span data-i18n="benefit_cat_co">Co-Benefits (indikativ)</span>
+              <span class="confidence-badge confidence-lower" data-i18n="conf_lower">Proxy-Bewertung</span>
+            </div>
+            <p class="section-note" id="roi-strategic-note"></p>
+            <div class="cobenefit-cards">
+              <!-- Biodiversity -->
+              <div class="cobenefit-card" id="cob-biodiversity">
+                <div class="cob-icon">🦋</div>
+                <div class="cob-label" data-i18n="cob_biodiversity">Biodiversität</div>
+                <div class="cob-score-wrap">
+                  <div class="cob-bar-track">
+                    <div class="cob-bar-fill cob-bar-bio" id="cob-bio-bar" style="width:0%"></div>
+                  </div>
+                  <div class="cob-score" id="cob-bio-score">—</div>
+                </div>
+                <div class="cob-label-val" id="cob-bio-label">—</div>
+              </div>
+              <!-- Air quality -->
+              <div class="cobenefit-card" id="cob-airquality">
+                <div class="cob-icon">💨</div>
+                <div class="cob-label" data-i18n="cob_airquality">Luftqualität</div>
+                <div class="cob-score-wrap">
+                  <div class="cob-bar-track">
+                    <div class="cob-bar-fill cob-bar-air" id="cob-air-bar" style="width:0%"></div>
+                  </div>
+                  <div class="cob-score" id="cob-air-score">—</div>
+                </div>
+                <div class="cob-label-val" id="cob-air-label">—</div>
+              </div>
+              <!-- Aesthetics -->
+              <div class="cobenefit-card" id="cob-aesthetics">
+                <div class="cob-icon">✨</div>
+                <div class="cob-label" data-i18n="cob_aesthetics">Ästhetik / Aufenthaltsqualität</div>
+                <div class="cob-score-wrap">
+                  <div class="cob-bar-track">
+                    <div class="cob-bar-fill cob-bar-aes" id="cob-aes-bar" style="width:0%"></div>
+                  </div>
+                  <div class="cob-score" id="cob-aes-score">—</div>
+                </div>
+                <div class="cob-label-val" id="cob-aes-label">—</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /benefits-section -->
+
+        <!-- Recommended next step -->
+        <div class="next-step-banner" id="roi-next-step">
+          <div class="nsb-icon">→</div>
+          <div class="nsb-content">
+            <div class="nsb-label" data-i18n="next_step_label">Empfohlener nächster Schritt</div>
+            <div class="nsb-action" id="nsb-action-text">—</div>
+            <div class="nsb-service" id="nsb-service-text">—</div>
+          </div>
+          <a href="https://kgsk.de/kontakt" class="btn-cta-sm" target="_blank" rel="noopener noreferrer" data-i18n="cta_btn_primary" onclick="window.KGSK_ANALYTICS && KGSK_ANALYTICS.ctaClick('roi_next_step','kgsk.de/kontakt')">Anfragen</a>
+        </div>
+
+        <!-- Methodology toggle -->
+        <div class="methodology-panel">
+          <button class="methodology-toggle" onclick="KGSK_APP.toggleMethodology()" type="button">
+            <span data-i18n="methodology_toggle">Methodikhinweise anzeigen</span>
+            <span class="toggle-arrow" id="method-arrow">▼</span>
+          </button>
+          <div class="methodology-content" id="methodology-content" style="display:none">
+            <div id="methodology-text"><!-- populated by JS --></div>
+          </div>
+        </div>
+
+        <!-- ROI disclaimer -->
+        <p class="disclaimer-sm" data-i18n="roi_disclaimer">Alle Werte sind Richtwerte auf Basis typischer Marktdaten.</p>
+
+      </div><!-- /roi-results -->
+    </div><!-- /roi-layout -->
+
+    <!-- ROI CTA -->
+    <div class="fmc-cta" style="margin-top:32px;">
+      <div class="fmc-cta-text">
+        <h4 data-i18n="roi_cta_title">Genaue Wirtschaftlichkeitsberechnung gewünscht?</h4>
+        <p data-i18n="roi_cta_desc">Unser Team erstellt Ihnen eine individuelle Wirtschaftlichkeitsanalyse auf Basis Ihrer konkreten Projektdaten.</p>
+      </div>
+      <a href="https://kgsk.de/kontakt" class="btn-cta" target="_blank" rel="noopener noreferrer" data-i18n="cta_btn_primary" onclick="window.KGSK_ANALYTICS && KGSK_ANALYTICS.ctaClick('roi_bottom_cta','kgsk.de/kontakt')">Kostenloses Erstgespräch anfragen</a>
+    </div>
+
+  </div><!-- /panel-roi -->
+
+</main>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <span class="footer-brand">Küsters Grün.Stadt.Klima GmbH</span>
+      <nav class="footer-links" aria-label="Rechtliche Links">
+        <a href="https://kgsk.de/impressum" target="_blank" rel="noopener noreferrer">Impressum</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://kgsk.de/datenschutz" target="_blank" rel="noopener noreferrer">Datenschutz</a>
+      </nav>
+    </div>
+    <p class="footer-disclaimer" data-i18n="footer_disclaimer">Dieses Tool dient der indikativen Ersteinschätzung und ersetzt keine fachkundige Beratung.</p>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS (order matters)
+══════════════════════════════════════════ -->
+<script src="i18n.js"></script>
+<script src="funding-data.js"></script>
+<script src="scoring.js"></script>
+<script src="benefit-model.js"></script>
+<script src="kgsk-analytics.js"></script>
+<script src="app.js"></script>
+
+<!-- iframe height bridge — reports content height to parent via postMessage -->
+<script>
+(function() {
+  if (window.self === window.top) return;
+  var _lastH = 0;
+  function postHeight() {
+    var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    if (h === _lastH) return;
+    _lastH = h;
+    window.parent.postMessage({ type: 'kgsk_resize', height: h }, '*');
+  }
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+  if (window.MutationObserver) {
+    new MutationObserver(postHeight).observe(document.body, { childList: true, subtree: true, attributes: true });
+  }
+  setInterval(postHeight, 800);
+})();
+</script>
+
+</body>
+</html>
