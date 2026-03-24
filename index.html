@@ -993,6 +993,8 @@ function resetModal() {
   var e = document.getElementById('state-error');
   if (s) s.className = 'form-state-success';
   if (e) e.className = 'form-state-error';
+  var submitBtn = document.getElementById('eq-submit');
+  if (submitBtn) { submitBtn.disabled = false; }
 }
 
 function renderModalStrings() {
