@@ -1091,8 +1091,8 @@ select:focus {
   align-items: center;
   gap: 8px;
   padding: 13px 28px;
-  background: var(--lime);
-  color: var(--dark);
+  background: var(--lime-dark);
+  color: var(--white);
   border: none;
   border-radius: var(--r-sm);
   font-family: inherit;
@@ -1105,7 +1105,7 @@ select:focus {
 }
 
 .btn-cta:hover {
-  background: var(--lime-dark);
+  background: var(--lime-hover);
   color: var(--white);
   box-shadow: 0 4px 14px rgba(122,158,0,0.4);
   text-decoration: none;
