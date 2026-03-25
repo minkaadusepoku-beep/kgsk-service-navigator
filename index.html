@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── KGSK Design Tokens ─────────────────────────────────── */
+/* ── KGSK Design Tokens ─────────────────────────────────────── */
 :root {
   --dark:       #0F1923;
   --lime:       #A6D100;
@@ -39,16 +39,13 @@ body {
   font-size: 16px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
 a:hover { color: var(--dark); }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-/* ── Header ─────────────────────────────────────────────── */
+/* ── Header ──────────────────────────────────────────── */
 .site-header {
   background: var(--dark);
   position: sticky;
@@ -104,7 +101,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .lang-btn:hover { color: rgba(255,255,255,0.8); }
 .lang-btn.active { background: var(--lime); color: var(--dark); border-color: var(--lime); }
 
-/* ── Hero ────────────────────────────────────────────────── */
+/* ── Hero ─────────────────────────────────────────────── */
 .pn-hero {
   background: var(--dark);
   padding: 72px 40px 80px;
@@ -141,12 +138,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 1.7;
 }
 
-/* ── Main grid ───────────────────────────────────────────── */
+/* ── Main grid ─────────────────────────────────────────── */
 .pn-main {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 52px 24px 80px;
-  flex: 1;
+  padding: 52px 24px 24px;
 }
 
 .pn-section-label {
@@ -175,10 +171,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  margin-bottom: 48px;
+  margin-bottom: 16px;
 }
 
-/* ── Path card ───────────────────────────────────────────── */
+/* ── Path card ─────────────────────────────────────────── */
 .path-card {
   background: var(--white);
   border: 1.5px solid var(--border);
@@ -279,7 +275,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   text-decoration: none;
 }
 
-/* ── Trust bar ───────────────────────────────────────────── */
+/* ── Trust bar ─────────────────────────────────────────── */
 .trust-bar {
   background: var(--dark);
   border-radius: var(--r-lg);
@@ -306,7 +302,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .trust-label { font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 500; line-height: 1.4; max-width: 120px; }
 .trust-highlight { font-size: 11px; font-weight: 700; color: var(--lime); letter-spacing: 0.04em; }
 
-/* ── Modal overlay ───────────────────────────────────────── */
+/* ── Modal overlay ──────────────────────────────────────── */
 .modal-overlay {
   position: absolute;
   left: 0;
@@ -497,23 +493,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .btn-fallback:hover { background: var(--border); color: var(--dark); text-decoration: none; }
 
-/* ── Footer ──────────────────────────────────────────────── */
-.site-footer {
-  background: var(--dark);
-  padding: 24px 40px;
-  margin-top: auto;
-}
-.footer-inner {
-  max-width: 1080px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 12px;
-}
-.footer-brand { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.4); }
-.footer-links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-.footer-links a { font-size: 12px; font-weight: 600; color: var(--lime); text-decoration: none; transition: color 0.15s; }
-.footer-links a:hover { color: var(--lime-dark); }
-.footer-disclaimer { width: 100%; font-size: 11px; color: rgba(255,255,255,0.22); line-height: 1.55; margin-top: 6px; }
-
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 860px) {
   .pn-live-row    { grid-template-columns: 1fr; }
@@ -527,19 +506,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .site-header   { padding: 0 20px; }
   .header-tagline { display: none; }
   .pn-hero       { padding: 48px 20px 60px; }
-  .pn-main       { padding: 32px 16px 60px; }
+  .pn-main       { padding: 32px 16px 24px; }
   .pn-title      { font-size: 28px; }
   .pn-sub        { font-size: 16px; }
   .pn-enquiry-row { grid-template-columns: 1fr; }
   .form-row      { grid-template-columns: 1fr; }
-  .footer-inner  { flex-direction: column; align-items: flex-start; }
-  .site-footer   { padding: 22px 20px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══ HEADER ════════════════════════════════════════════ -->
+<!-- ══ HEADER ════════════════════════════════════════════════ -->
 <header class="site-header" role="banner">
   <a href="https://www.kgsk.de" class="logo-box" aria-label="KGSK Startseite">
     <div class="logo-name">KGSK</div>
@@ -553,14 +530,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   </div>
 </header>
 
-<!-- ══ HERO ══════════════════════════════════════════════ -->
+<!-- ══ HERO ═══════════════════════════════════════════════════ -->
 <section class="pn-hero" aria-labelledby="pn-hero-title">
   <p class="pn-eyebrow" id="pn-eyebrow"></p>
   <h1 class="pn-title" id="pn-hero-title"></h1>
   <p class="pn-sub"    id="pn-hero-sub"></p>
 </section>
 
-<!-- ══ MAIN ══════════════════════════════════════════════ -->
+<!-- ══ MAIN ═══════════════════════════════════════════════════ -->
 <main class="pn-main">
   <p class="pn-section-label" id="label-live"></p>
   <div class="pn-live-row" id="live-cards"></div>
@@ -592,7 +569,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   </div>
 </main>
 
-<!-- ══ ENQUIRY MODAL ═════════════════════════════════════ -->
+<!-- ══ ENQUIRY MODAL ═══════════════════════════════════════════ -->
 <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal-card">
     <div class="modal-header">
@@ -664,19 +641,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   </div><!-- /modal-card -->
 </div><!-- /modal-overlay -->
 
-<!-- ══ FOOTER ════════════════════════════════════════════ -->
-<footer class="site-footer" role="contentinfo">
-  <div class="footer-inner">
-    <span class="footer-brand">Küsters Grün.Stadt.Klima GmbH</span>
-    <nav class="footer-links" aria-label="Rechtliches">
-      <a href="https://www.kgsk.de/impressum"  target="_blank" rel="noopener noreferrer" id="ftr-imprint">Impressum</a>
-      <a href="https://www.kgsk.de/datenschutz" target="_blank" rel="noopener noreferrer" id="ftr-privacy">Datenschutz</a>
-      <a href="./kgsk-tools.html" id="ftr-tool-link">Planungstools</a>
-    </nav>
-    <p class="footer-disclaimer" id="ftr-disclaimer"></p>
-  </div>
-</footer>
-
 <script src="kgsk-analytics.js"></script>
 <script>
 /* ==========================================================================
@@ -684,13 +648,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Self-contained. ES5-compatible.
    ========================================================================== */
 
-/* ── Config ─────────────────────────────────────────────── */
-
-/* Set this to your form endpoint to enable live submission.
-   Leave empty for demo mode (console.log + simulated success). */
 var KGSK_ENQUIRY_ENDPOINT = 'https://formspree.io/f/xjganwzw';
-
-/* ── Language ────────────────────────────────────────────── */
 
 var hubLang = localStorage.getItem('kgsk_lang') || 'de';
 var _activeService = null;
@@ -773,8 +731,6 @@ function hs(key) {
   return (d && d[key]) ? d[key] : (S['de'][key] || key);
 }
 
-/* ── Service definitions ─────────────────────────────────── */
-
 var SERVICES = [
   {
     id:       'plan',
@@ -845,19 +801,15 @@ var SERVICES = [
   }
 ];
 
-/* ── Card rendering ──────────────────────────────────────── */
-
 function buildCard(svc) {
   var title    = hubLang === 'de' ? svc.title_de : svc.title_en;
   var desc     = hubLang === 'de' ? svc.desc_de  : svc.desc_en;
   var cta      = hubLang === 'de' ? svc.cta_de   : svc.cta_en;
   var features = svc.live ? (hubLang === 'de' ? svc.features_de : svc.features_en) : null;
-
   var statusClass = svc.live ? 'status-live' : 'status-enquiry';
   var statusText  = svc.live
     ? (hubLang === 'de' ? '● Verfügbar' : '● Available')
     : (hubLang === 'de' ? '◌ Anfrage'   : '◌ Enquiry');
-
   var ctaEl = '';
   if (svc.live) {
     ctaEl = '<a href="' + svc.url + '" class="card-cta cta-primary"' +
@@ -867,7 +819,6 @@ function buildCard(svc) {
     ctaEl = '<button class="card-cta cta-secondary" onclick="openEnquiry(\'' + svc.id + '\')">' +
       cta + ' →</button>';
   }
-
   var featureHtml = '';
   if (features && features.length) {
     featureHtml = '<ul class="card-feature-list">';
@@ -876,38 +827,26 @@ function buildCard(svc) {
     }
     featureHtml += '</ul>';
   }
-
   return '<div class="path-card' + (svc.live ? ' card-live' : '') + '">' +
     '<span class="card-status ' + statusClass + '">' + statusText + '</span>' +
     '<div class="card-icon" aria-hidden="true">' + svc.icon + '</div>' +
     '<h3 class="card-title">' + title + '</h3>' +
     '<p class="card-desc">' + desc + '</p>' +
-    featureHtml +
-    ctaEl +
-    '</div>';
+    featureHtml + ctaEl + '</div>';
 }
 
 function renderCards() {
   var liveEl    = document.getElementById('live-cards');
   var enquiryEl = document.getElementById('enquiry-cards');
   if (!liveEl || !enquiryEl) return;
-
-  var liveHtml = '';
-  var enquiryHtml = '';
-
+  var liveHtml = '', enquiryHtml = '';
   for (var i = 0; i < SERVICES.length; i++) {
-    if (SERVICES[i].live) {
-      liveHtml += buildCard(SERVICES[i]);
-    } else {
-      enquiryHtml += buildCard(SERVICES[i]);
-    }
+    if (SERVICES[i].live) { liveHtml += buildCard(SERVICES[i]); }
+    else { enquiryHtml += buildCard(SERVICES[i]); }
   }
-
   liveEl.innerHTML    = liveHtml;
   enquiryEl.innerHTML = enquiryHtml;
 }
-
-/* ── Static string rendering ─────────────────────────────── */
 
 function renderStrings() {
   var ids = {
@@ -919,11 +858,7 @@ function renderStrings() {
     'trust-1-label': 'trust_1',
     'trust-2-label': 'trust_2',
     'trust-3-label': 'trust_3',
-    'trust-4-label': 'trust_4',
-    'ftr-imprint':   'ftr_imprint',
-    'ftr-privacy':   'ftr_privacy',
-    'ftr-tool-link': 'ftr_tool',
-    'ftr-disclaimer':'ftr_disclaimer'
+    'trust-4-label': 'trust_4'
   };
   for (var id in ids) {
     if (!Object.prototype.hasOwnProperty.call(ids, id)) continue;
@@ -940,8 +875,6 @@ function updateLangButtons() {
   }
 }
 
-/* ── Language switch ─────────────────────────────────────── */
-
 function setHubLang(lang) {
   var prev = hubLang;
   hubLang = lang;
@@ -954,28 +887,22 @@ function setHubLang(lang) {
   renderModalStrings();
 }
 
-/* ── Modal ───────────────────────────────────────────────── */
-
 function openEnquiry(serviceId) {
   _activeService = null;
   for (var i = 0; i < SERVICES.length; i++) {
     if (SERVICES[i].id === serviceId) { _activeService = SERVICES[i]; break; }
   }
   if (!_activeService) return;
-
   resetModal();
   renderModalStrings();
-
   var serviceTag = hubLang === 'de'
     ? (_activeService.enquiry_context_de || _activeService.title_de)
     : (_activeService.enquiry_context_en || _activeService.title_en);
   var tagEl = document.getElementById('modal-service-tag');
   if (tagEl) tagEl.textContent = _activeService.icon + '  ' + serviceTag;
-
   window.parent.postMessage({ type: 'kgsk_get_viewport' }, '*');
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
-
   if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.ctaClick('enquiry_open', serviceId); }
 }
 
@@ -999,20 +926,20 @@ function resetModal() {
 
 function renderModalStrings() {
   var fields = {
-    'modal-title':    'modal_form_title',
-    'lbl-name':       'lbl_name',
-    'lbl-email':      'lbl_email',
-    'lbl-org':        'lbl_org',
-    'lbl-phone':      'lbl_phone',
-    'lbl-message':    'lbl_message',
-    'lbl-consent':    'lbl_consent',
-    'eq-submit':      'btn_submit',
-    'success-title':  'success_title',
-    'success-body':   'success_body',
+    'modal-title':      'modal_form_title',
+    'lbl-name':         'lbl_name',
+    'lbl-email':        'lbl_email',
+    'lbl-org':          'lbl_org',
+    'lbl-phone':        'lbl_phone',
+    'lbl-message':      'lbl_message',
+    'lbl-consent':      'lbl_consent',
+    'eq-submit':        'btn_submit',
+    'success-title':    'success_title',
+    'success-body':     'success_body',
     'btn-success-close':'success_close',
-    'error-title':    'error_title',
-    'error-body':     'error_body',
-    'btn-error-close':'error_close'
+    'error-title':      'error_title',
+    'error-body':       'error_body',
+    'btn-error-close':  'error_close'
   };
   for (var id in fields) {
     if (!Object.prototype.hasOwnProperty.call(fields, id)) continue;
@@ -1020,8 +947,6 @@ function renderModalStrings() {
     if (el) el.textContent = hs(fields[id]);
   }
 }
-
-/* ── Form submission ─────────────────────────────────────── */
 
 var _lastEnquiryPayload = null;
 
@@ -1032,22 +957,17 @@ function submitEnquiry() {
   var phone   = (document.getElementById('eq-phone')   || {}).value || '';
   var message = (document.getElementById('eq-message') || {}).value || '';
   var consent = (document.getElementById('eq-consent') || {}).checked || false;
-
-  var valMsg = document.getElementById('eq-validation');
-
+  var valMsg  = document.getElementById('eq-validation');
   if (!name.trim() || !email.trim() || !consent) {
     if (valMsg) { valMsg.textContent = hs('val_error'); valMsg.className = 'validation-msg visible'; }
     return;
   }
   if (valMsg) { valMsg.className = 'validation-msg'; }
-
   var submitBtn = document.getElementById('eq-submit');
-  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = hubLang === 'de' ? 'Senden\u2026' : 'Sending\u2026'; }
-
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = hubLang === 'de' ? 'Senden…' : 'Sending…'; }
   var serviceLabel = _activeService
     ? (hubLang === 'de' ? (_activeService.enquiry_context_de || _activeService.title_de) : (_activeService.enquiry_context_en || _activeService.title_en))
     : '';
-
   var payload = {
     source_type:   'hub_enquiry',
     service:       _activeService ? _activeService.id : '',
@@ -1062,11 +982,8 @@ function submitEnquiry() {
     ts:            new Date().toISOString(),
     page_url:      window.location.href
   };
-
   _lastEnquiryPayload = payload;
-
   if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.enquiryPrepared(_activeService ? _activeService.id : ''); }
-
   if (KGSK_ENQUIRY_ENDPOINT) {
     if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.directSendAttempt('hub_enquiry'); }
     fetch(KGSK_ENQUIRY_ENDPOINT, {
@@ -1091,7 +1008,6 @@ function submitEnquiry() {
       showFormState('error');
     });
   } else {
-    /* No endpoint — honest demo state */
     showFormState('demo');
   }
 }
@@ -1132,7 +1048,6 @@ function copyHubEnquiry() {
     '',
     (isDE ? 'Zeitpunkt: ' : 'Timestamp: ') + _lastEnquiryPayload.ts
   ].join('\n');
-
   var btn = document.getElementById('btn-copy-enquiry');
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(lines).then(function() {
@@ -1157,28 +1072,20 @@ function showFormState(state) {
   var stateOk = document.getElementById('state-success');
   var stateEr = document.getElementById('state-error');
   var fa      = document.getElementById('fallback-actions');
-
   if (form) form.style.display = 'none';
-
   if (state === 'success') {
     if (stateOk) stateOk.className = 'form-state-success visible';
     return;
   }
-
-  /* error or demo — both show the error card */
   if (stateEr) stateEr.className = 'form-state-error visible';
-
   var iconEl  = document.getElementById('error-icon');
   var titleEl = document.getElementById('error-title');
   var bodyEl  = document.getElementById('error-body');
-
   if (state === 'demo') {
     if (iconEl)  iconEl.textContent  = 'i\uFE0F';
     if (titleEl) titleEl.textContent = hs('demo_title');
     if (bodyEl)  bodyEl.textContent  = hs('demo_body');
   }
-
-  /* Wire up fallback buttons */
   if (fa && _lastEnquiryPayload) {
     fa.style.display = 'flex';
     var copyBtn   = document.getElementById('btn-copy-enquiry');
@@ -1194,27 +1101,20 @@ function showFormState(state) {
   }
 }
 
-/* ── Analytics ───────────────────────────────────────────── */
-
 function trackCardClick(serviceId, url) {
   if (window.KGSK_ANALYTICS) { KGSK_ANALYTICS.ctaClick('live_card_' + serviceId, url); }
 }
-
-/* ── Close on backdrop click ─────────────────────────────── */
 
 document.addEventListener('click', function(e) {
   var overlay = document.getElementById('modal-overlay');
   if (e.target === overlay) { closeModal(); }
 });
 
-/* ── ESC key ─────────────────────────────────────────────── */
 document.addEventListener('keydown', function(e) {
   if ((e.key === 'Escape' || e.keyCode === 27) && document.getElementById('modal-overlay').classList.contains('open')) {
     closeModal();
   }
 });
-
-/* ── Init ────────────────────────────────────────────────── */
 
 document.addEventListener('DOMContentLoaded', function() {
   updateLangButtons();
@@ -1225,13 +1125,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- iframe height bridge — reports content height to parent via postMessage -->
+<!-- iframe height bridge -->
 <script>
 (function() {
   if (window.self === window.top) return;
   var _lastH      = 0;
   var _modalOpen  = false;
-  var MODAL_BOOST = 520; /* extra px to guarantee modal is fully visible */
+  var MODAL_BOOST = 520;
 
   function postHeight() {
     var base = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
@@ -1248,7 +1148,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   setInterval(postHeight, 800);
 
-  /* Position modal overlay at the user's current viewport position */
   window.addEventListener('message', function(e) {
     if (!e.data || e.data.type !== 'kgsk_viewport_offset') return;
     var overlay = document.getElementById('modal-overlay');
@@ -1257,7 +1156,6 @@ document.addEventListener('DOMContentLoaded', function() {
     overlay.style.height = e.data.height + 'px';
   });
 
-  /* Wrap openModal / closeModal to toggle height boost */
   var _origOpen  = window.openModal;
   var _origClose = window.closeModal;
   if (typeof _origOpen === 'function') {
