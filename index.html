@@ -275,33 +275,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   text-decoration: none;
 }
 
-/* ── Trust bar ─────────────────────────────────────────── */
-.trust-bar {
-  background: var(--dark);
-  border-radius: var(--r-lg);
-  padding: 28px 40px;
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  justify-content: space-around;
-}
-
-.trust-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 6px;
-  padding: 0 24px;
-}
-.trust-item:not(:last-child) {
-  border-right: 1px solid rgba(255,255,255,0.1);
-}
-
-.trust-icon { font-size: 22px; margin-bottom: 2px; }
-.trust-label { font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 500; line-height: 1.4; max-width: 120px; }
-.trust-highlight { font-size: 11px; font-weight: 700; color: var(--lime); letter-spacing: 0.04em; }
-
 /* ── Modal overlay ──────────────────────────────────────── */
 .modal-overlay {
   position: absolute;
@@ -497,8 +470,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 @media (max-width: 860px) {
   .pn-live-row    { grid-template-columns: 1fr; }
   .pn-enquiry-row { grid-template-columns: 1fr 1fr; }
-  .trust-bar      { flex-wrap: wrap; justify-content: center; gap: 20px; padding: 22px 24px; }
-  .trust-item     { border-right: none !important; padding: 0 16px; }
   .pn-title       { font-size: 34px; }
 }
 
@@ -544,29 +515,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   <p class="pn-section-label" id="label-enquiry" style="margin-top:32px;"></p>
   <div class="pn-enquiry-row" id="enquiry-cards"></div>
-
-  <div class="trust-bar" role="region" aria-label="Kompetenzen">
-    <div class="trust-item">
-      <div class="trust-icon" aria-hidden="true">🌿</div>
-      <div class="trust-highlight">Greenpass® zertifiziert</div>
-      <div class="trust-label" id="trust-1-label"></div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon" aria-hidden="true">📄</div>
-      <div class="trust-highlight" id="trust-2-val">3</div>
-      <div class="trust-label" id="trust-2-label"></div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon" aria-hidden="true">🇪🇺</div>
-      <div class="trust-highlight">EU Interreg DE-NL</div>
-      <div class="trust-label" id="trust-3-label"></div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon" aria-hidden="true">🔬</div>
-      <div class="trust-highlight" id="trust-4-val">2</div>
-      <div class="trust-label" id="trust-4-label"></div>
-    </div>
-  </div>
 </main>
 
 <!-- ══ ENQUIRY MODAL ═══════════════════════════════════════════ -->
@@ -643,11 +591,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 <script src="kgsk-analytics.js"></script>
 <script>
-/* ==========================================================================
-   KGSK Service-Navigator — hub.js (inline)
-   Self-contained. ES5-compatible.
-   ========================================================================== */
-
 var KGSK_ENQUIRY_ENDPOINT = 'https://formspree.io/f/xjganwzw';
 
 var hubLang = localStorage.getItem('kgsk_lang') || 'de';
@@ -661,10 +604,6 @@ var S = {
     hero_sub:        'Wählen Sie den Bereich, der Ihrem Vorhaben am nächsten kommt — wir begleiten Sie von der ersten Einschätzung bis zur Umsetzung.',
     label_live:      'Direkt starten — Tool verfügbar',
     label_enquiry:   'Anfrage — wir melden uns innerhalb von 2 Werktagen',
-    trust_1:         'Urban Climate Architect',
-    trust_2:         'Peer-reviewed Publikationen',
-    trust_3:         'Work Package Leader',
-    trust_4:         'Peer-Reviewer-Mandate',
     modal_form_title:'Projektanfrage senden',
     lbl_name:        'Name *',
     lbl_email:       'E-Mail *',
@@ -683,11 +622,7 @@ var S = {
     demo_title:      'Demo-Modus',
     demo_body:       'Kein Endpunkt konfiguriert. Bitte wenden Sie sich direkt an office@kgsk.de oder kopieren Sie Ihre Anfrage.',
     lbl_copy:        'Anfrage kopieren',
-    lbl_mailto:      'E-Mail öffnen',
-    ftr_imprint:     'Impressum',
-    ftr_privacy:     'Datenschutz',
-    ftr_tool:        'Planungstools',
-    ftr_disclaimer:  'Dieses Tool dient der indikativen Ersteinschätzung und ersetzt keine fachkundige Projektberatung. Küsters Grün.Stadt.Klima GmbH — Hürth, Deutschland.'
+    lbl_mailto:      'E-Mail öffnen'
   },
   en: {
     hdr_tagline:     'Service Navigator',
@@ -696,10 +631,6 @@ var S = {
     hero_sub:        'Select the service area closest to your project — we guide you from first assessment through to implementation.',
     label_live:      'Start now — tool available',
     label_enquiry:   'Enquiry — we respond within 2 business days',
-    trust_1:         'Urban Climate Architect',
-    trust_2:         'Peer-reviewed publications',
-    trust_3:         'Work Package Leader',
-    trust_4:         'Peer reviewer mandates',
     modal_form_title:'Send project enquiry',
     lbl_name:        'Name *',
     lbl_email:       'Email *',
@@ -718,11 +649,7 @@ var S = {
     demo_title:      'Demo mode',
     demo_body:       'No endpoint configured. Please contact office@kgsk.de directly or copy your enquiry.',
     lbl_copy:        'Copy enquiry',
-    lbl_mailto:      'Open email',
-    ftr_imprint:     'Legal notice',
-    ftr_privacy:     'Privacy policy',
-    ftr_tool:        'Planning tools',
-    ftr_disclaimer:  'This tool provides an indicative first assessment and does not replace professional project consulting. Küsters Grün.Stadt.Klima GmbH — Hürth, Germany.'
+    lbl_mailto:      'Open email'
   }
 };
 
@@ -854,11 +781,7 @@ function renderStrings() {
     'pn-hero-title': 'hero_title',
     'pn-hero-sub':   'hero_sub',
     'label-live':    'label_live',
-    'label-enquiry': 'label_enquiry',
-    'trust-1-label': 'trust_1',
-    'trust-2-label': 'trust_2',
-    'trust-3-label': 'trust_3',
-    'trust-4-label': 'trust_4'
+    'label-enquiry': 'label_enquiry'
   };
   for (var id in ids) {
     if (!Object.prototype.hasOwnProperty.call(ids, id)) continue;
