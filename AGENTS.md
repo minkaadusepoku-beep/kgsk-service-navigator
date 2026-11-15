@@ -110,8 +110,12 @@ redirects real leads.
   *published* page and pushing it would have silently reinstated three removed elements
   on the live site. **`git fetch` and compare against `origin/main` before touching
   anything here.** Resolved that day by rebasing, not by forcing.
-- **No D: mirror configured.** Besides GitHub this repository is the only copy, and it
-  lives on the Desktop. It should be mirrored like every other tool.
+- ☠ **No backup at all beyond GitHub.** Alone in the fleet, this repository has **no D:
+  mirror** and **no `post-commit` mirror hook** — the other 37 tool repos have both.
+  It is also the only checkout living on the Desktop, outside every repository base
+  directory, which is how it escaped the backup sweep in the first place. Install it:
+  `D:/backups/install-mirror-hooks.ps1`, then verify a `D:/backups/kgsk-deploy.git`
+  appears and that the ledger under `C:/Users/amink/.claude/backup-state/` records it.
 - **Clarify the relationship to `Tools Folder/GSKE3`** (the Next.js implementation of the
   same product) and to `Projects/kgsk-foerdercheck` (the live Cloudflare funding finder)
   before duplicating logic — three codebases currently answer overlapping questions.
