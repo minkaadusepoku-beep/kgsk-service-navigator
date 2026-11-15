@@ -103,7 +103,14 @@ redirects real leads.
 
 ## 6. Open items
 
-- **No D: mirror configured.** This repository is the only copy besides GitHub, and it
+- ☠ **This checkout went stale without anyone noticing.** On 2026-11-15 it sat three
+  commits behind `origin/main` — it had never seen `1049227`, `36e5984` or `82c08c4`
+  (footer removal, viewport-forcing body layout, trust/credentials bar), which together
+  rewrote `index.html`, `kgsk-tools.html` and `styles.css`. Editing a stale copy of a
+  *published* page and pushing it would have silently reinstated three removed elements
+  on the live site. **`git fetch` and compare against `origin/main` before touching
+  anything here.** Resolved that day by rebasing, not by forcing.
+- **No D: mirror configured.** Besides GitHub this repository is the only copy, and it
   lives on the Desktop. It should be mirrored like every other tool.
 - **Clarify the relationship to `Tools Folder/GSKE3`** (the Next.js implementation of the
   same product) and to `Projects/kgsk-foerdercheck` (the live Cloudflare funding finder)
